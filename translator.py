@@ -28,20 +28,41 @@ class Translator:
             for line in f:
                 parts = line.split(" ")
                 alien = parts[0].lower()
-                translation = parts[1].lower().strip()
-                self.dict.addWord(alien, translation)
+                translations = [t.lower() for t in parts[1:]]
+                self.dict.addWord(alien, translations)
 
         except FileNotFoundError:
             print(f"file {dict} non trovato")
 
     def handleAdd(self, entry):
         # entry is a tuple <parola_aliena> <traduzione1 traduzione2 ...>
-        pass
+        parts= entry.strip().split(" ")
+        alien = parts[0].lower()
+        translations = [t.lower() for t in parts[1:]]
+        check_lowercase=True
+        for t in translations:
+            if not t.isalpha():
+                check_lowercase = False
+        if not alien.isalpha() or not check_lowercase:
+            print("Errore: sono ammessi solo caratteri alfabetici [a-zA-Z]")
+            return
+        self.dict.addWord(alien, translations)
+        print(f"Parola {alien} aggiunta con traduzione/i {', '.join(translations)}")
+
+
+
 
     def handleTranslate(self, query):
         # query is a string <parola_aliena>
-        pass
+        translations = self.dict.translate(query)
+        if translations is not None:
+            return print(f"La/e traduzione/i di {query} è/sono {', '.join(translations)}")
+        return print("La parola aliena inserita non è presente nel dizionario")
 
     def handleWildCard(self,query):
         # query is a string with a ? --> <par?la_aliena>
+
         pass
+    def __str__(self):
+        for alien in self.dict.words.keys():
+            print(f"{alien} {', ' .join(self.dict.words.get(alien))}")
