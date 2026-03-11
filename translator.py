@@ -61,6 +61,19 @@ class Translator:
 
     def handleWildCard(self,query):
         # query is a string with a ? --> <par?la_aliena>
+        cnt=0
+        for char in query:
+            if char=='?':
+                cnt+=1
+                if cnt > 1:
+                    return print("ERRORE, presente più di un '?' nella parola aliena")
+        if cnt<1: return print("ERRORE, non è presente il '?' nella parola aliena")
+        results = self.dict.translateWordWildCard(query)
+        for alien, translations in results:
+            print(f"Parola aliena corrispondente: {alien}       Traduzione/i:{', '.join(translations)}")
+
+
+
 
         pass
     def __str__(self):

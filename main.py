@@ -2,8 +2,9 @@ import translator as tr
 
 t = tr.Translator()
 
+stop=False
 
-while(True):
+while(stop!=True):
 
     t.printMenu()
 
@@ -20,11 +21,13 @@ while(True):
     if int(txtIn) == 2:
         entry = input("Inserisci la parola aliena: ")
         t.handleTranslate(entry)
-        pass
+
     if int(txtIn) == 3:
-        pass
+        entry = input("Inserisci la parola aliena con un '?' al posto di un qualsiasi carattere: ")
+        t.handleWildCard(entry)
+
     if int(txtIn) == 4:
         t.__str__()
-    if int(txtIn) == 5:
 
-        break
+    if int(txtIn) == 5:
+        stop=True

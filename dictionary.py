@@ -17,5 +17,18 @@ class Dictionary:
         return self.words.get(alien, None)
 
 
-    def translateWordWildCard(self):
-        pass
+    def translateWordWildCard(self,query):
+        results = []
+        for alien in self.words:
+            match = False
+            if len(query) == len(alien):
+                match = True
+                for q,a in zip(query,alien):
+                    if (q!='?' and q!=a):
+                        match = False
+            if match:
+                results.append((alien, self.words[alien]))
+
+        return results
+
+
